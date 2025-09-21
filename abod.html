@@ -1,0 +1,1023 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cell 1: Impor Library &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'abod';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/1000120759.webp" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/1000120759.webp" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    intro
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="myintro.html">my introdoction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MemahamiBisnis.html">Memahami Bisnis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataUnderstanding.html">Data Understanding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EksplorasiData.html">📊 Eksplorasi Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iris_data.html">Analisis Clustering &amp; Anomaly Detection dengan PyCaret</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jjl.html">🚀 Deteksi Outlier dengan ABOD:</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fabod.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/abod.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cell 1: Impor Library</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Cell 1: Impor Library</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-2-koneksi-load-data">Cell 2: Koneksi &amp; Load Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-3-setup-pycaret">Cell 3: Setup PyCaret</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rincian-parameter-yang-digunakan">Rincian parameter yang digunakan:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output">Output</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-4-buat-model-dan-tandai-outlier">Cell 4: Buat Model dan Tandai Outlier</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-model-abod">1. Membuat model ABOD</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="cell-1-impor-library">
+<h1>Cell 1: Impor Library<a class="headerlink" href="#cell-1-impor-library" title="Link to this heading">#</a></h1>
+<p>Pada cell ini dilakukan proses <strong>impor library</strong> yang dibutuhkan untuk analisis:</p>
+<ul class="simple">
+<li><p><strong>pandas (<code class="docutils literal notranslate"><span class="pre">pd</span></code>)</strong><br />
+Digunakan untuk memanipulasi dan menganalisis data, terutama dalam bentuk tabel (DataFrame).</p></li>
+<li><p><strong>sqlalchemy (<code class="docutils literal notranslate"><span class="pre">create_engine</span></code>)</strong><br />
+Berfungsi untuk membuat koneksi ke berbagai jenis database, sehingga kita dapat membaca atau menulis data langsung dari/ke database.</p></li>
+<li><p><strong>pycaret.anomaly</strong><br />
+Bagian dari library <em>PyCaret</em> yang khusus digunakan untuk mendeteksi anomali (outlier detection).<br />
+Dengan <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pycaret.anomaly</span> <span class="pre">import</span> <span class="pre">*</span></code>, kita mengimpor seluruh fungsi dan modul yang tersedia untuk analisis anomali.</p></li>
+</ul>
+<p>Di akhir cell terdapat perintah:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Library berhasil diimpor!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+
+<span class="c1"># Mengimpor modul dengan alias untuk menghindari konflik</span>
+<span class="kn">import</span> <span class="nn">pycaret.clustering</span> <span class="k">as</span> <span class="nn">pyc</span>
+<span class="kn">import</span> <span class="nn">pycaret.anomaly</span> <span class="k">as</span> <span class="nn">pya</span>
+
+<span class="c1"># --- Konfigurasi dan Muat Data (Tetap Sama) ---</span>
+<span class="n">db_user</span> <span class="o">=</span> <span class="s1">&#39;postgres&#39;</span>
+<span class="n">db_password</span> <span class="o">=</span> <span class="s1">&#39;123456789&#39;</span>  <span class="c1"># Ganti dengan password Anda</span>
+<span class="n">db_host</span> <span class="o">=</span> <span class="s1">&#39;localhost&#39;</span>
+<span class="n">db_port</span> <span class="o">=</span> <span class="s1">&#39;5432&#39;</span>
+<span class="n">db_name</span> <span class="o">=</span> <span class="s1">&#39;data_iris&#39;</span>
+<span class="n">table_name</span> <span class="o">=</span> <span class="s1">&#39;data_iris&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">db_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;postgresql://</span><span class="si">{</span><span class="n">db_user</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">db_password</span><span class="si">}</span><span class="s1">@</span><span class="si">{</span><span class="n">db_host</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">db_port</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">db_name</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">db_uri</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_table</span><span class="p">(</span><span class="n">table_name</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset berhasil dimuat dari tabel &#39;</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Terjadi kesalahan: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Mengimpor modul dengan alias untuk menghindari konflik</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">pycaret.clustering</span> <span class="k">as</span> <span class="nn">pyc</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">pycaret.anomaly</span> <span class="k">as</span> <span class="nn">pya</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="c1"># --- Konfigurasi dan Muat Data (Tetap Sama) ---</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pycaret&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cell-2-koneksi-load-data">
+<h1>Cell 2: Koneksi &amp; Load Data<a class="headerlink" href="#cell-2-koneksi-load-data" title="Link to this heading">#</a></h1>
+<p>Pada cell ini dilakukan proses <strong>koneksi ke database PostgreSQL</strong> dan <strong>pengambilan data</strong> ke dalam DataFrame pandas:</p>
+<ol class="arabic">
+<li><p><strong>Membuat string koneksi database</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">db_connection_str</span> <span class="o">=</span> <span class="s1">&#39;postgresql://postgres:123456789@localhost:5432/data_iris&#39;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell 2: Koneksi &amp; Load Data</span>
+<span class="c1"># Ganti dengan detail koneksi database Anda</span>
+<span class="n">db_connection_str</span> <span class="o">=</span> <span class="s1">&#39;postgresql://postgres:123456789@localhost:5432/data_iris&#39;</span>
+<span class="n">db_engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">db_connection_str</span><span class="p">)</span>
+
+<span class="c1"># Ganti dengan nama tabel Anda</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM data_iris&quot;</span>
+
+<span class="c1"># Membaca data dari PostgreSQL ke dalam pandas DataFrame</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">db_engine</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data berhasil dimuat dari PostgreSQL.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dimensi data:&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Preview data:&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data berhasil dimuat dari PostgreSQL.
+Dimensi data: (150, 5)
+Preview data:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>sepal length</th>
+      <th>sepal width</th>
+      <th>petal length</th>
+      <th>petal width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="cell-3-setup-pycaret">
+<h1>Cell 3: Setup PyCaret<a class="headerlink" href="#cell-3-setup-pycaret" title="Link to this heading">#</a></h1>
+<p>Pada cell ini dilakukan <strong>inisialisasi PyCaret Anomaly Detection</strong> dengan fungsi <code class="docutils literal notranslate"><span class="pre">setup()</span></code>.<br />
+Fungsi ini merupakan langkah awal untuk menyiapkan data agar bisa digunakan dalam berbagai model deteksi anomali.</p>
+<section id="rincian-parameter-yang-digunakan">
+<h2>Rincian parameter yang digunakan:<a class="headerlink" href="#rincian-parameter-yang-digunakan" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">data</span></code></strong><br />
+DataFrame yang berisi dataset hasil dari koneksi PostgreSQL pada cell sebelumnya.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ignore_features</span> <span class="pre">=</span> <span class="pre">['id',</span> <span class="pre">'Class']</span></code></strong><br />
+Kolom yang diabaikan saat proses pelatihan model.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> → Biasanya merupakan identifier unik yang tidak relevan untuk analisis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Class</span></code> → Kolom label yang tidak digunakan dalam unsupervised anomaly detection.<br />
+Catatan: Anda dapat mengganti isi daftar ini sesuai kolom yang tidak ingin disertakan, atau mengosongkannya jika semua kolom numerik relevan.</p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">session_id</span> <span class="pre">=</span> <span class="pre">123</span></code></strong><br />
+Digunakan untuk memastikan <em>reproducibility</em> (hasil yang konsisten setiap kali dijalankan), karena mengatur seed random number generator.</p></li>
+</ul>
+</section>
+<section id="output">
+<h2>Output<a class="headerlink" href="#output" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Saat dijalankan, PyCaret akan menampilkan ringkasan informasi mengenai data, fitur yang digunakan, fitur yang diabaikan, serta detail lain terkait setup environment anomaly detection.</p></li>
+<li><p>Pesan konfirmasi tambahan:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Setup PyCaret selesai.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell 3: Setup PyCaret</span>
+<span class="c1"># Ganti [&#39;id_column&#39;, &#39;kolom_lain&#39;] dengan nama kolom yang ingin diabaikan</span>
+<span class="c1"># Jika semua kolom numerik relevan, Anda bisa mengosongkan ignore_features</span>
+<span class="n">exp_anomaly</span> <span class="o">=</span> <span class="n">setup</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> 
+                    <span class="n">ignore_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;Class&#39;</span><span class="p">],</span> <span class="c1"># Contoh dari dataset iris-full.csv</span>
+                    <span class="n">session_id</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span> <span class="c1"># Hapus &#39;silent=True&#39;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Setup PyCaret selesai.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_7ca95_row5_col1 {
+  background-color: lightgreen;
+}
+</style>
+<table id="T_7ca95">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_7ca95_level0_col0" class="col_heading level0 col0" >Description</th>
+      <th id="T_7ca95_level0_col1" class="col_heading level0 col1" >Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_7ca95_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_7ca95_row0_col0" class="data row0 col0" >Session id</td>
+      <td id="T_7ca95_row0_col1" class="data row0 col1" >123</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_7ca95_row1_col0" class="data row1 col0" >Original data shape</td>
+      <td id="T_7ca95_row1_col1" class="data row1 col1" >(150, 5)</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_7ca95_row2_col0" class="data row2 col0" >Transformed data shape</td>
+      <td id="T_7ca95_row2_col1" class="data row2 col1" >(150, 4)</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_7ca95_row3_col0" class="data row3 col0" >Ignore features</td>
+      <td id="T_7ca95_row3_col1" class="data row3 col1" >2</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_7ca95_row4_col0" class="data row4 col0" >Numeric features</td>
+      <td id="T_7ca95_row4_col1" class="data row4 col1" >4</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row5" class="row_heading level0 row5" >5</th>
+      <td id="T_7ca95_row5_col0" class="data row5 col0" >Preprocess</td>
+      <td id="T_7ca95_row5_col1" class="data row5 col1" >True</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row6" class="row_heading level0 row6" >6</th>
+      <td id="T_7ca95_row6_col0" class="data row6 col0" >Imputation type</td>
+      <td id="T_7ca95_row6_col1" class="data row6 col1" >simple</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row7" class="row_heading level0 row7" >7</th>
+      <td id="T_7ca95_row7_col0" class="data row7 col0" >Numeric imputation</td>
+      <td id="T_7ca95_row7_col1" class="data row7 col1" >mean</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row8" class="row_heading level0 row8" >8</th>
+      <td id="T_7ca95_row8_col0" class="data row8 col0" >Categorical imputation</td>
+      <td id="T_7ca95_row8_col1" class="data row8 col1" >mode</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row9" class="row_heading level0 row9" >9</th>
+      <td id="T_7ca95_row9_col0" class="data row9 col0" >CPU Jobs</td>
+      <td id="T_7ca95_row9_col1" class="data row9 col1" >-1</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row10" class="row_heading level0 row10" >10</th>
+      <td id="T_7ca95_row10_col0" class="data row10 col0" >Use GPU</td>
+      <td id="T_7ca95_row10_col1" class="data row10 col1" >False</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row11" class="row_heading level0 row11" >11</th>
+      <td id="T_7ca95_row11_col0" class="data row11 col0" >Log Experiment</td>
+      <td id="T_7ca95_row11_col1" class="data row11 col1" >False</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row12" class="row_heading level0 row12" >12</th>
+      <td id="T_7ca95_row12_col0" class="data row12 col0" >Experiment Name</td>
+      <td id="T_7ca95_row12_col1" class="data row12 col1" >anomaly-default-name</td>
+    </tr>
+    <tr>
+      <th id="T_7ca95_level0_row13" class="row_heading level0 row13" >13</th>
+      <td id="T_7ca95_row13_col0" class="data row13 col0" >USI</td>
+      <td id="T_7ca95_row13_col1" class="data row13 col1" >1eea</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Setup PyCaret selesai.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="cell-4-buat-model-dan-tandai-outlier">
+<h1>Cell 4: Buat Model dan Tandai Outlier<a class="headerlink" href="#cell-4-buat-model-dan-tandai-outlier" title="Link to this heading">#</a></h1>
+<p>Pada cell ini dilakukan proses <strong>pembuatan model deteksi anomali</strong> menggunakan PyCaret, serta penandaan data yang dianggap outlier.</p>
+<section id="membuat-model-abod">
+<h2>1. Membuat model ABOD<a class="headerlink" href="#membuat-model-abod" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">abod_model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="s1">&#39;abod&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell 4: Buat Model dan Tandai Outlier</span>
+<span class="c1"># Membuat model ABOD</span>
+<span class="n">abod_model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="s1">&#39;abod&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menggunakan model untuk mendeteksi outlier di seluruh dataset</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">assign_model</span><span class="p">(</span><span class="n">abod_model</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Outlier berhasil dideteksi. Kolom &#39;Anomaly&#39; dan &#39;Anomaly_Score&#39; ditambahkan.&quot;</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div><div class="output text_html"></div><div class="output text_html"></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Outlier berhasil dideteksi. Kolom &#39;Anomaly&#39; dan &#39;Anomaly_Score&#39; ditambahkan.
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal length</th>
+      <th>sepal width</th>
+      <th>petal length</th>
+      <th>petal width</th>
+      <th>Anomaly</th>
+      <th>Anomaly_Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>-556.251421</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>-400.000928</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>-93.421993</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>-99.229221</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>-82.176201</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell 5: Hapus Outlier</span>
+<span class="c1"># Menampilkan jumlah outlier yang ditemukan</span>
+<span class="n">outliers_count</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;Anomaly&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total data: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah data normal (inliers): </span><span class="si">{</span><span class="n">outliers_count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah data outlier: </span><span class="si">{</span><span class="n">outliers_count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Membuat DataFrame baru yang hanya berisi data yang BUKAN outlier (Anomaly == 0)</span>
+<span class="n">data_bersih</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;Anomaly&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Menghapus kolom &#39;Anomaly&#39; dan &#39;Anomaly_Score&#39; karena tidak diperlukan lagi</span>
+<span class="n">data_bersih</span> <span class="o">=</span> <span class="n">data_bersih</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Anomaly&#39;</span><span class="p">,</span> <span class="s1">&#39;Anomaly_Score&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Outlier telah dihapus.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimensi dataset setelah dibersihkan: </span><span class="si">{</span><span class="n">data_bersih</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">data_bersih</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total data: 150
+Jumlah data normal (inliers): 142
+Jumlah data outlier: 8
+
+Outlier telah dihapus.
+Dimensi dataset setelah dibersihkan: (142, 4)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal length</th>
+      <th>sepal width</th>
+      <th>petal length</th>
+      <th>petal width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Cell 1: Impor Library</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-2-koneksi-load-data">Cell 2: Koneksi &amp; Load Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-3-setup-pycaret">Cell 3: Setup PyCaret</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rincian-parameter-yang-digunakan">Rincian parameter yang digunakan:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output">Output</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-4-buat-model-dan-tandai-outlier">Cell 4: Buat Model dan Tandai Outlier</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-model-abod">1. Membuat model ABOD</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dicky Saputra calon data analyst
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
