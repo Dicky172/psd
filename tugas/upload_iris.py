@@ -1,36 +1,68 @@
 import pandas as pd
 from sqlalchemy import create_engine
 
-# --- GANTI INFORMASI DI BAWAH INI ---
-db_user = 'postgres'  # ganti dengan username Anda
-db_password = '170205' # ganti dengan password Anda
-db_host = 'localhost' # ganti jika host berbeda (misal: alamat IP server)
-db_port = '5433' # port default untuk PostgreSQL
-db_name = 'Data_saya' # ganti dengan nama database Anda
-table_name = 'Data_saya' # ganti dengan nama tabel yang berisi data IMDB
-# ------------------------------------
+# --- KONFIGURASI ---
+db_user = 'postgres'
+db_password = '123456789' # Password diperbarui sesuai input Anda
+db_host = 'localhost'
+db_port = '5432'          # Port diperbarui sesuai input Anda
+db_name = 'iris_adasyn'
+# Nama tabel diubah agar lebih deskriptif
+table_name = 'iris_partial_setosa' 
+csv_file_path = 'iris-full.csv'
+# ----------------------------------------------------
 
-# Membuat string koneksi (connection string)
+# 1. Membaca seluruh data dari file CSV
+try:
+    df_full = pd.read_csv(csv_file_path)
+    print(f"✅ Berhasil membaca file '{csv_file_path}'.")
+
+except FileNotFoundError:
+    print(f"❌ Error: File tidak ditemukan di path '{csv_file_path}'.")
+    exit()
+
+# 2. MEMISAHKAN DAN MENGGABUNGKAN DATA
+print("Memfilter data...")
+
+# 2a. Ambil 15 data pertama dari kelas 'Iris-setosa'
+df_setosa_15 = df_full[df_full['Class'] == 'Iris-setosa'].head(15)
+print(f"-> Ditemukan {len(df_setosa_15)} baris data untuk 'Iris-setosa'.")
+
+# 2b. Ambil SEMUA data dari kelas LAINNYA
+df_others = df_full[df_full['Class'] != 'Iris-setosa']
+print(f"-> Ditemukan {len(df_others)} baris data untuk kelas selain 'Iris-setosa'.")
+
+# 2c. Gabungkan kedua DataFrame tersebut menjadi satu
+df_to_upload = pd.concat([df_setosa_15, df_others], ignore_index=True)
+
+# Menampilkan informasi data yang akan diunggah
+print("-" * 50)
+print(f"Total data yang akan diunggah: {len(df_to_upload)} baris.")
+print("\nVerifikasi jumlah data per kelas yang akan diunggah:")
+print(df_to_upload['Class'].value_counts())
+print("-" * 50)
+
+
+# 3. Membuat string koneksi (connection string)
 db_url = f'postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}'
 
-# Membuat engine koneksi ke database
+# 4. Membuat engine koneksi dan mengunggah data yang sudah difilter
 engine = None
 try:
+    print("Mencoba terhubung ke database PostgreSQL...")
     engine = create_engine(db_url)
     
-    # Query SQL untuk mengambil semua data dari tabel
-    sql_query = f'SELECT * FROM {table_name};'
+    print(f"Mengunggah data ke tabel '{table_name}'...")
     
-    # Membaca data dari PostgreSQL ke dalam DataFrame pandas
-    df = pd.read_sql(sql_query, engine)
+    # Mengunggah DataFrame gabungan (df_to_upload)
+    df_to_upload.to_sql(table_name, engine, if_exists='replace', index=False)
     
-    print("Berhasil terhubung dan mengambil data dari PostgreSQL.")
-    print("\n5 Baris Data Teratas:")
-    display(df.head())
+    print(f"\n🎉 SUKSES! Data telah diunggah ke tabel '{table_name}'.")
 
 except Exception as e:
-    print(f"Gagal terhubung ke database: {e}")
+    print(f"\n❌ GAGAL terhubung atau mengupload data: {e}")
 
 finally:
     if engine is not None:
-        engine.dispose() # Menutup koneksi
+        engine.dispose()
+        print("Koneksi ke database telah ditutup.")
