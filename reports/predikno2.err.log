@@ -1,0 +1,165 @@
+Traceback (most recent call last):
+  File "C:\Users\nabil\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\nabil\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nabil\AppData\Roaming\Python\Python312\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nabil\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\nabil\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\nabil\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\nabil\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Kita sekarang menggunakan ID Koleksi: SENTINEL_5P_L2
+# dan Nama Band: NO2
+#
+
+# 1. SETUP: Impor library yang dibutuhkan
+import openeo
+import pandas as pd
+import json
+print("Library berhasil di-impor.")
+
+# -------------------------------------------------------------------
+# 2. KONEKSI: Hubungkan ke server Copernicus
+print("Menghubungkan ke server openeo.dataspace.copernicus.eu...")
+
+# Anda mungkin tidak perlu autentikasi lagi jika sesi masih aktif
+# Tapi jika error, jalankan baris di bawah ini:
+# connection.authenticate_oidc() 
+
+# Baris ini mengasumsikan variabel 'connection' Anda masih ada
+# Jika Anda me-restart kernel, Anda harus jalankan lagi:
+try:
+    connection
+    print("Koneksi 'connection' sudah ada. Melanjutkan...")
+except NameError:
+    print("Membuat koneksi 'connection' baru...")
+    connection = openeo.connect("openeo.dataspace.copernicus.eu")
+    connection.authenticate_oidc()
+    
+print("Berhasil terhubung!")
+
+# -------------------------------------------------------------------
+# 3. TENTUKAN PARAMETER ANDA
+print("Menyiapkan parameter...")
+
+# A. Parameter Waktu (Temporal Extent)
+temporal_extent = ["2021-01-01", "2023-12-31"]
+
+# B. Parameter Lokasi (Spatial Extent) - GeoJSON Anda
+geojson_polygon_anda = {
+    "coordinates": [
+      [
+        [111.78029945930473, -7.083952654390501],
+        [111.78029945930473, -7.189061951686597],
+        [111.91071379866247, -7.189061951686597],
+        [111.91071379866247, -7.083952654390501],
+        [111.78029945930473, -7.083952654390501]
+      ]
+    ],
+    "type": "Polygon"
+}
+
+# C. Parameter Data (Data Collection) - INI YANG KITA PERBAIKI
+collection_id = "SENTINEL_5P_L2"   # <<< PERUBAHAN DI SINI
+band_name = "NO2"                  # <<< PERUBAHAN DI SINI
+
+print(f"Parameter diatur: Area Anda, Waktu {temporal_extent}, Data {collection_id}, Band {band_name}")
+
+# -------------------------------------------------------------------
+# 4. PROSES PENGAMBILAN DATA (MEMBUAT 'RESEP')
+print("Membangun 'data cube' (resep proses)...")
+
+# 1. Muat koleksi data awal
+cube = connection.load_collection(
+    collection_id,
+    temporal_extent=temporal_extent,
+    bands=[band_name]
+)
+
+# 2. Agregasi Temporal (Menjadi Rata-rata Harian)
+# ... (komentar) ...
+print("  - Menambahkan langkah: aggregate_temporal_period (rata-rata harian)")
+cube_daily = cube.aggregate_temporal_period(
+    period="day",   # <<< UBAH 'interval' MENJADI 'period'
+    reducer="mean"  # 'mean' artinya ambil rata-rata
+)
+
+# 3. Agregasi Spasial (Menjadi Rata-rata Area Poligon)
+# Sekarang dari data harian itu, kita ambil rata-rata 
+# semua pixel di dalam poligon kita.
+print("  - Menambahkan langkah: aggregate_spatial (rata-rata di dalam poligon)")
+cube_aggregated = cube_daily.aggregate_spatial(
+    geometries=geojson_polygon_anda,
+    reducer="mean"  # 'mean' artinya ambil rata-rata
+)
+
+print("'Data cube' (resep) berhasil dibuat.")
+
+# -------------------------------------------------------------------
+# 5. EKSEKUSI DAN UNDUH HASIL
+output_file = "no2_data_area_anda.csv"
+
+print(f"\nMemulai 'job' untuk mengambil data. ")
+print("CATATAN: Karena kita memproses data L2 (mentah), 'job' ini")
+print("mungkin butuh waktu 5-15 menit. Mohon ditunggu...")
+
+try:
+    # Perintah untuk menjalankan 'resep' dan mengunduh hasilnya
+    cube_aggregated.download(output_file, format="CSV")
+    
+    print(f"\n--- BERHASIL! ---")
+    print(f"Data telah diunduh ke file: {output_file}")
+
+except Exception as e:
+    print(f"\n--- GAGAL ---")
+    print(f"Terjadi error saat 'job' dieksekusi: {e}")
+    print("Silakan cek pesan error di atas.")
+
+# -------------------------------------------------------------------
+# 6. VERIFIKASI (Opsional tapi sangat disarankan)
+# Mari kita baca file CSV yang baru saja diunduh untuk melihat isinya
+
+try:
+    print(f"\nMembaca file {output_file} untuk verifikasi...")
+    df = pd.read_csv(output_file)
+    
+    print("Pratinjau Data (5 baris pertama):")
+    print(df.head())
+    
+    print("\nInfo Data:")
+    df.info()
+    
+    print(f"\nJumlah baris data: {len(df)}")
+    print("Tahap 1 Selesai. File CSV Anda sudah siap untuk tahap 2 (Preprocessing).")
+    
+except FileNotFoundError:
+    print(f"Verifikasi gagal: File {output_file} tidak ditemukan.")
+except Exception as e:
+    print(f"Verifikasi gagal: Error saat membaca CSV: {e}")
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[3], line 6[0m
+[0;32m      1[0m [38;5;66;03m# Kita sekarang menggunakan ID Koleksi: SENTINEL_5P_L2[39;00m
+[0;32m      2[0m [38;5;66;03m# dan Nama Band: NO2[39;00m
+[0;32m      3[0m [38;5;66;03m#[39;00m
+[0;32m      4[0m 
+[0;32m      5[0m [38;5;66;03m# 1. SETUP: Impor library yang dibutuhkan[39;00m
+[1;32m----> 6[0m [38;5;28;01mimport[39;00m [38;5;21;01mopeneo[39;00m
+[0;32m      7[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
+[0;32m      8[0m [38;5;28;01mimport[39;00m [38;5;21;01mjson[39;00m
+
+[1;31mModuleNotFoundError[0m: No module named 'openeo'
+
