@@ -1,0 +1,10 @@
+# Abaikan hasil build jupyter-book
+tugas/_build/
+_build/
+
+# Abaikan cache Python
+__pycache__/
+*.pyc
+
+# Abaikan notebook output checkpoint
+.ipynb_checkpoints/

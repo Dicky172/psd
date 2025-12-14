@@ -1,0 +1,1467 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>📊 Analisis dan Klasifikasi Dataset Iris dengan PCA, SMOTE, dan Logistic Regression &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'adasyn';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="coba" href="coba.html" />
+    <link rel="prev" title="🚀 Deteksi Outlier dengan ABOD:" href="jjl.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/1000120759.webp" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/1000120759.webp" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    intro
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="myintro.html">my introdoction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MemahamiBisnis.html">Memahami Bisnis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataUnderstanding.html">Data Understanding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EksplorasiData.html">📊 Eksplorasi Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iris_data.html">Analisis Clustering &amp; Anomaly Detection dengan PyCaret</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jjl.html">🚀 Deteksi Outlier dengan ABOD:</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">📊 Analisis dan Klasifikasi Dataset Iris dengan PCA, SMOTE, dan Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coba.html">coba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="predikno2.html">prediksi NO2</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fadasyn.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/adasyn.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>📊 Analisis dan Klasifikasi Dataset Iris dengan PCA, SMOTE, dan Logistic Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-analisis">🔹 Langkah-langkah Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">🎯 Tujuan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">📦 Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-dari-postgresql">🗄️ Load Data dari PostgreSQL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-pca-2d-sebelum-oversampling">🔍 Visualisasi PCA 2D (Sebelum Oversampling)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pisahkan-fitur-dan-target">🔹 1. Pisahkan Fitur dan Target</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standarisasi-fitur">🔹 2. Standarisasi Fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-dengan-pca">🔹 3. Reduksi Dimensi dengan PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-scatter-plot">🔹 4. Visualisasi Scatter Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kelas-awal">🔹 5. Distribusi Kelas Awal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oversampling-dengan-smote">⚖️ Oversampling dengan SMOTE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synthetic-minority-oversampling-technique-smote">🔹 Synthetic Minority Oversampling Technique (SMOTE)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-proses">🔹 Alur Proses</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output">🔹 Output</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#persiapandan-modelling-bagging">persiapandan modelling bagging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-pelatihan-dan-evaluasi">proses pelatihan dan evaluasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-dan-penentuan-estimator-terbaik">perbandingan dan penentuan estimator terbaik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-dengan-logistic-regression">🤖 Klasifikasi dengan Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-train-test-split">🔹 1. Membagi Data (Train-Test Split)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standarisasi-data">🔹 2. Standarisasi Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inisialisasi-dan-pelatihan-model">🔹 3. Inisialisasi dan Pelatihan Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi">🔹 4. Prediksi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-performa-model">🔹 5. Evaluasi Performa Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-confusion-matrix">📊 Visualisasi Confusion Matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apa-itu-confusion-matrix">🔹 Apa itu Confusion Matrix?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi">🔹 Implementasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi">🔹 Interpretasi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-akhir-proyek">🏁 Kesimpulan Akhir Proyek</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poin-poin-kunci-keberhasilan">🔑 Poin-Poin Kunci Keberhasilan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-data-adalah-kunci-utama">1. Preprocessing Data adalah Kunci Utama</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-memberi-validasi-dan-konteks-mendalam">2. Visualisasi Memberi Validasi dan Konteks Mendalam 📈</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kinerja-model-unggul-dan-dapat-dijelaskan">3. Kinerja Model Unggul dan Dapat Dijelaskan 🧠</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan">✨ Ringkasan</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-dan-klasifikasi-dataset-iris-dengan-pca-smote-dan-logistic-regression">
+<h1>📊 Analisis dan Klasifikasi Dataset Iris dengan PCA, SMOTE, dan Logistic Regression<a class="headerlink" href="#analisis-dan-klasifikasi-dataset-iris-dengan-pca-smote-dan-logistic-regression" title="Link to this heading">#</a></h1>
+<p>Notebook ini berisi langkah-langkah analisis data, visualisasi, serta klasifikasi menggunakan <strong>Logistic Regression</strong> pada dataset dengan target kolom <code class="docutils literal notranslate"><span class="pre">species</span></code>.<br />
+Dataset dimuat langsung dari <strong>PostgreSQL</strong> menggunakan <code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code> dan diproses lebih lanjut hingga tahap evaluasi model.</p>
+<hr class="docutils" />
+<section id="langkah-langkah-analisis">
+<h2>🔹 Langkah-langkah Analisis<a class="headerlink" href="#langkah-langkah-analisis" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Impor Library</strong><br />
+Mengimpor semua library yang dibutuhkan, termasuk untuk:</p>
+<ul class="simple">
+<li><p><strong>Manipulasi data</strong> (<code class="docutils literal notranslate"><span class="pre">pandas</span></code>, <code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code>)</p></li>
+<li><p><strong>Visualisasi</strong> (<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>)</p></li>
+<li><p><strong>Oversampling</strong> (<code class="docutils literal notranslate"><span class="pre">SMOTE</span></code> dari <code class="docutils literal notranslate"><span class="pre">imblearn</span></code>)</p></li>
+<li><p><strong>Klasifikasi &amp; evaluasi</strong> (<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>)</p></li>
+<li><p><strong>Clustering &amp; anomaly detection</strong> (<code class="docutils literal notranslate"><span class="pre">pycaret</span></code>)</p></li>
+</ul>
+</li>
+<li><p><strong>Load Data dari Database</strong></p>
+<ul class="simple">
+<li><p>Dataset diambil dari database PostgreSQL dengan nama <strong><code class="docutils literal notranslate"><span class="pre">iris_adasyn</span></code></strong>.</p></li>
+<li><p>Tabel yang digunakan: <strong><code class="docutils literal notranslate"><span class="pre">iris_partial_setosa</span></code></strong>.</p></li>
+<li><p>Data dimuat ke dalam DataFrame <code class="docutils literal notranslate"><span class="pre">df</span></code> untuk digunakan pada analisis berikutnya.</p></li>
+<li><p>Ditampilkan beberapa baris awal data untuk verifikasi.</p></li>
+</ul>
+</li>
+<li><p><strong>Visualisasi PCA 2D (Sebelum Oversampling)</strong></p>
+<ul class="simple">
+<li><p>Data difokuskan pada fitur (X) dan target (<code class="docutils literal notranslate"><span class="pre">species</span></code>).</p></li>
+<li><p>Dilakukan <strong>standarisasi</strong> agar PCA bekerja optimal.</p></li>
+<li><p>PCA mereduksi data ke 2 dimensi utama (PC1 &amp; PC2) untuk divisualisasikan.</p></li>
+<li><p>Ditampilkan juga <strong>distribusi kelas awal</strong> sebelum dilakukan oversampling.</p></li>
+</ul>
+</li>
+<li><p><strong>Oversampling dengan SMOTE</strong></p>
+<ul class="simple">
+<li><p><strong>SMOTE (Synthetic Minority Oversampling Technique)</strong> digunakan untuk menyeimbangkan jumlah sampel antar kelas.</p></li>
+<li><p>Setelah proses ini, distribusi kelas menjadi seimbang sehingga model tidak bias pada kelas mayoritas.</p></li>
+</ul>
+</li>
+<li><p><strong>Proses Klasifikasi (Train &amp; Evaluate Model)</strong></p>
+<ul class="simple">
+<li><p>Data hasil SMOTE dibagi menjadi <strong>train (70%)</strong> dan <strong>test (30%)</strong>.</p></li>
+<li><p>Dilakukan standarisasi ulang khusus untuk data klasifikasi.</p></li>
+<li><p>Model <strong>Logistic Regression</strong> dilatih menggunakan data train, kemudian diuji pada data test.</p></li>
+<li><p>Performa model dievaluasi dengan <strong>akurasi</strong> dan <strong>classification report</strong> (precision, recall, f1-score).</p></li>
+</ul>
+</li>
+<li><p><strong>Visualisasi Confusion Matrix</strong></p>
+<ul class="simple">
+<li><p>Membuat confusion matrix untuk melihat detail prediksi benar vs salah per kelas.</p></li>
+<li><p>Visualisasi menggunakan heatmap agar lebih mudah dibaca.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="tujuan">
+<h2>🎯 Tujuan<a class="headerlink" href="#tujuan" title="Link to this heading">#</a></h2>
+<p>Notebook ini bertujuan untuk:</p>
+<ul class="simple">
+<li><p>Memuat data dari PostgreSQL ke dalam DataFrame.</p></li>
+<li><p>Melihat perbedaan distribusi data sebelum dan sesudah <strong>SMOTE</strong>.</p></li>
+<li><p>Melatih dan mengevaluasi <strong>model klasifikasi Logistic Regression</strong> pada data yang sudah seimbang.</p></li>
+<li><p>Memberikan insight melalui <strong>visualisasi PCA</strong> dan <strong>confusion matrix</strong>.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="import-library">
+<h2>📦 Import Library<a class="headerlink" href="#import-library" title="Link to this heading">#</a></h2>
+<p>Pada tahap awal, kita melakukan <strong>impor library</strong> yang akan digunakan sepanjang analisis.<br />
+Berikut penjelasan singkat tiap library dan fungsinya:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pandas</span></code> (<code class="docutils literal notranslate"><span class="pre">pd</span></code>)</strong> → manipulasi dan analisis data dalam bentuk DataFrame.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> (<code class="docutils literal notranslate"><span class="pre">plt</span></code>)</strong> → membuat visualisasi dasar seperti scatter plot, bar chart, dll.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">seaborn</span></code> (<code class="docutils literal notranslate"><span class="pre">sns</span></code>)</strong> → library visualisasi berbasis matplotlib yang lebih estetik dan mudah digunakan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code></strong> → melakukan standarisasi fitur (mean=0, std=1) agar PCA dan model bekerja optimal.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sklearn.decomposition.PCA</span></code></strong> → melakukan reduksi dimensi menggunakan Principal Component Analysis.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">imblearn.over_sampling.SMOTE</span></code></strong> → melakukan oversampling kelas minoritas dengan teknik SMOTE (Synthetic Minority Oversampling Technique).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.train_test_split</span></code></strong> → membagi dataset menjadi data latih (train) dan data uji (test).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LogisticRegression</span></code></strong> → algoritma klasifikasi berbasis regresi logistik.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sklearn.metrics</span></code> (classification_report, accuracy_score, confusion_matrix)</strong> → mengukur performa model klasifikasi.</p></li>
+</ul>
+<p>📌 Jika semua library berhasil diimpor, akan ditampilkan pesan:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Impor Library</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="kn">import</span> <span class="n">SMOTE</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Library tambahan berhasil diimpor.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="kn">import</span> <span class="n">SMOTE</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;imblearn&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-data-dari-postgresql">
+<h2>🗄️ Load Data dari PostgreSQL<a class="headerlink" href="#load-data-dari-postgresql" title="Link to this heading">#</a></h2>
+<p>Pada tahap ini, dataset dimuat langsung dari <strong>database PostgreSQL</strong> ke dalam DataFrame <code class="docutils literal notranslate"><span class="pre">df</span></code> menggunakan <code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code>.<br />
+Beberapa poin penting dari kode ini:</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">create_engine</span></code> (SQLAlchemy):</strong><br />
+Digunakan untuk membuat koneksi ke database PostgreSQL dengan format URI.</p></li>
+<li><p><strong>Penggunaan PyCaret:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pycaret.clustering</span></code> diimpor sebagai <code class="docutils literal notranslate"><span class="pre">pyc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pycaret.anomaly</span></code> diimpor sebagai <code class="docutils literal notranslate"><span class="pre">pya</span></code><br />
+(penggunaan alias bertujuan untuk menghindari konflik nama modul saat dipakai nanti).</p></li>
+</ul>
+</li>
+<li><p><strong>Parameter Koneksi Database:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">db_user</span></code> → username PostgreSQL (<code class="docutils literal notranslate"><span class="pre">postgres</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">db_password</span></code> → password untuk autentikasi</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">db_host</span></code> → alamat server database (dalam kasus ini <code class="docutils literal notranslate"><span class="pre">localhost</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">db_port</span></code> → port PostgreSQL (default: <code class="docutils literal notranslate"><span class="pre">5432</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">db_name</span></code> → nama database yang digunakan (<code class="docutils literal notranslate"><span class="pre">iris_adasyn</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">table_name</span></code> → nama tabel yang ingin diambil (<code class="docutils literal notranslate"><span class="pre">iris_partial_setosa</span></code>)</p></li>
+</ul>
+</li>
+<li><p><strong>Proses Load Data:</strong></p>
+<ol class="arabic">
+<li><p>URI koneksi dibentuk dengan format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">postgresql</span><span class="p">:</span><span class="o">//</span><span class="n">user</span><span class="p">:</span><span class="n">password</span><span class="nd">@host</span><span class="p">:</span><span class="n">port</span><span class="o">/</span><span class="n">database</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_engine</span></code> membuat koneksi ke database.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.read_sql_table</span></code> membaca isi tabel PostgreSQL langsung ke DataFrame <code class="docutils literal notranslate"><span class="pre">df</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">display(df.head())</span></code> menampilkan 5 baris pertama untuk verifikasi.</p></li>
+</ol>
+</li>
+<li><p><strong>Error Handling:</strong></p>
+<ul class="simple">
+<li><p>Jika terjadi kesalahan koneksi atau tabel tidak ditemukan, pesan error akan ditangkap dan ditampilkan.</p></li>
+</ul>
+</li>
+</ul>
+<p>Dengan cara ini, dataset <strong>iris_partial_setosa</strong> dari database <strong>iris_adasyn</strong> berhasil dimuat ke dalam Python untuk analisis lebih lanjut.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+
+<span class="c1"># Mengimpor modul dengan alias untuk menghindari konflik</span>
+<span class="kn">import</span> <span class="nn">pycaret.clustering</span> <span class="k">as</span> <span class="nn">pyc</span>
+<span class="kn">import</span> <span class="nn">pycaret.anomaly</span> <span class="k">as</span> <span class="nn">pya</span>
+
+<span class="c1"># --- Konfigurasi dan Muat Data (Tetap Sama) ---</span>
+<span class="n">db_user</span> <span class="o">=</span> <span class="s1">&#39;postgres&#39;</span>
+<span class="n">db_password</span> <span class="o">=</span> <span class="s1">&#39;123456789&#39;</span>  <span class="c1"># Ganti dengan password Anda</span>
+<span class="n">db_host</span> <span class="o">=</span> <span class="s1">&#39;localhost&#39;</span>
+<span class="n">db_port</span> <span class="o">=</span> <span class="s1">&#39;5432&#39;</span>
+<span class="n">db_name</span> <span class="o">=</span> <span class="s1">&#39;iris_adasyn&#39;</span>
+<span class="n">table_name</span> <span class="o">=</span> <span class="s1">&#39;iris_partial_setosa&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">db_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;postgresql://</span><span class="si">{</span><span class="n">db_user</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">db_password</span><span class="si">}</span><span class="s1">@</span><span class="si">{</span><span class="n">db_host</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">db_port</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">db_name</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">db_uri</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_table</span><span class="p">(</span><span class="n">table_name</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset berhasil dimuat dari tabel &#39;</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Terjadi kesalahan: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset berhasil dimuat dari tabel &#39;iris_partial_setosa&#39;.
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>Class</th>
+      <th>sepal length</th>
+      <th>sepal width</th>
+      <th>petal length</th>
+      <th>petal width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Iris-setosa</td>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="visualisasi-pca-2d-sebelum-oversampling">
+<h2>🔍 Visualisasi PCA 2D (Sebelum Oversampling)<a class="headerlink" href="#visualisasi-pca-2d-sebelum-oversampling" title="Link to this heading">#</a></h2>
+<p>Pada tahap ini, dataset divisualisasikan dalam <strong>2 dimensi utama</strong> menggunakan <strong>Principal Component Analysis (PCA)</strong>.<br />
+Langkah-langkah yang dilakukan adalah sebagai berikut:</p>
+<section id="pisahkan-fitur-dan-target">
+<h3>🔹 1. Pisahkan Fitur dan Target<a class="headerlink" href="#pisahkan-fitur-dan-target" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code> → berisi fitur prediktor (semua kolom kecuali target).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> → berisi kolom target (dalam contoh ini <code class="docutils literal notranslate"><span class="pre">Class</span></code>).</p></li>
+<li><p>Jika kolom target berbeda (misalnya <code class="docutils literal notranslate"><span class="pre">species</span></code>), ganti sesuai nama kolom yang digunakan di dataset Anda.</p></li>
+</ul>
+</section>
+<section id="standarisasi-fitur">
+<h3>🔹 2. Standarisasi Fitur<a class="headerlink" href="#standarisasi-fitur" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>PCA sensitif terhadap perbedaan skala antar fitur.</p></li>
+<li><p>Oleh karena itu, data distandarisasi menggunakan <strong>StandardScaler</strong> (mean = 0, standar deviasi = 1).</p></li>
+</ul>
+</section>
+<section id="reduksi-dimensi-dengan-pca">
+<h3>🔹 3. Reduksi Dimensi dengan PCA<a class="headerlink" href="#reduksi-dimensi-dengan-pca" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>PCA diterapkan untuk mereduksi data menjadi <strong>2 komponen utama</strong>.</p></li>
+<li><p>Hasil reduksi disimpan dalam DataFrame baru <code class="docutils literal notranslate"><span class="pre">pca_df</span></code> dengan kolom:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Principal</span> <span class="pre">Component</span> <span class="pre">1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Principal</span> <span class="pre">Component</span> <span class="pre">2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species</span></code> (berisi label target/kelas).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="visualisasi-scatter-plot">
+<h3>🔹 4. Visualisasi Scatter Plot<a class="headerlink" href="#visualisasi-scatter-plot" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Menggunakan <strong>seaborn.scatterplot</strong>, hasil PCA divisualisasikan dalam bidang 2D.</p></li>
+<li><p>Setiap titik mewakili sebuah sampel, dengan warna berbeda untuk tiap kelas (<code class="docutils literal notranslate"><span class="pre">hue='species'</span></code>).</p></li>
+<li><p>Tujuannya untuk melihat apakah kelas-kelas data dapat terpisahkan secara visual.</p></li>
+</ul>
+</section>
+<section id="distribusi-kelas-awal">
+<h3>🔹 5. Distribusi Kelas Awal<a class="headerlink" href="#distribusi-kelas-awal" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Ditampilkan <strong>jumlah data per kelas sebelum dilakukan oversampling (SMOTE)</strong>.</p></li>
+<li><p>Informasi ini penting untuk menunjukkan adanya ketidakseimbangan kelas.</p></li>
+</ul>
+<p>📌 Hasil tahap ini memberikan gambaran awal tentang sebaran data antar kelas sebelum proses balancing dilakukan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ Error: Pastikan kolom target Anda bernama &#39;species&#39;. Jika tidak, ganti nama kolom di dalam kode.&quot;</span><span class="p">)</span>
+    <span class="c1"># Hentikan eksekusi jika kolom tidak ditemukan</span>
+    <span class="n">exit</span><span class="p">()</span>
+
+
+<span class="c1"># Standarisasi fitur karena PCA sensitif terhadap skala data</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Terapkan PCA untuk mereduksi menjadi 2 komponen</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">principal_components</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+
+<span class="c1"># Buat DataFrame baru untuk hasil PCA</span>
+<span class="n">pca_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">principal_components</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Principal Component 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Principal Component 2&#39;</span><span class="p">])</span>
+<span class="n">pca_df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="c1"># Visualisasi hasil PCA</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Principal Component 1&#39;</span><span class="p">,</span> 
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Principal Component 2&#39;</span><span class="p">,</span> 
+    <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> 
+    <span class="n">data</span><span class="o">=</span><span class="n">pca_df</span><span class="p">,</span> 
+    <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> 
+    <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Visualisasi PCA 2D dari Dataset Iris&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Tampilkan distribusi kelas awal</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribusi kelas sebelum SMOTE:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e246c5c1f322bcdaa250c53b2d06b363a29135a6a48658e05822c1849c14eda2.png" src="_images/e246c5c1f322bcdaa250c53b2d06b363a29135a6a48658e05822c1849c14eda2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribusi kelas sebelum SMOTE:
+Class
+Iris-versicolor    50
+Iris-virginica     50
+Iris-setosa        15
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="oversampling-dengan-smote">
+<h2>⚖️ Oversampling dengan SMOTE<a class="headerlink" href="#oversampling-dengan-smote" title="Link to this heading">#</a></h2>
+<p>Setelah melihat distribusi kelas pada data asli (sebelumnya), langkah selanjutnya adalah <strong>menyeimbangkan jumlah sampel antar kelas</strong>.<br />
+Hal ini penting karena model klasifikasi cenderung bias ke kelas mayoritas jika data tidak seimbang.</p>
+<section id="synthetic-minority-oversampling-technique-smote">
+<h3>🔹 Synthetic Minority Oversampling Technique (SMOTE)<a class="headerlink" href="#synthetic-minority-oversampling-technique-smote" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>SMOTE</strong> bekerja dengan cara membuat sampel sintetis baru untuk kelas minoritas, bukan sekadar menduplikasi data.</p></li>
+<li><p>Teknik ini membantu memperkaya variasi data pada kelas minoritas sehingga model dapat belajar dengan lebih baik.</p></li>
+<li><p>Parameter <code class="docutils literal notranslate"><span class="pre">random_state=42</span></code> digunakan agar hasilnya konsisten setiap kali dijalankan.</p></li>
+</ul>
+</section>
+<section id="alur-proses">
+<h3>🔹 Alur Proses<a class="headerlink" href="#alur-proses" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Inisialisasi objek <strong>SMOTE</strong>.</p></li>
+<li><p>Terapkan <code class="docutils literal notranslate"><span class="pre">fit_resample(X,</span> <span class="pre">y)</span></code> untuk melakukan oversampling pada fitur (<code class="docutils literal notranslate"><span class="pre">X</span></code>) dan target (<code class="docutils literal notranslate"><span class="pre">y</span></code>).</p></li>
+<li><p>Hasilnya disimpan pada:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X_resampled</span></code> → fitur hasil oversampling</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_resampled</span></code> → target hasil oversampling</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="output">
+<h3>🔹 Output<a class="headerlink" href="#output" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Menampilkan distribusi kelas setelah SMOTE.</p></li>
+<li><p>Kini jumlah sampel tiap kelas menjadi seimbang sehingga data lebih siap digunakan untuk proses <strong>train-test split</strong> dan <strong>klasifikasi</strong>.</p></li>
+</ul>
+<p>📌 Dengan SMOTE, kita meminimalisir masalah <em>class imbalance</em> yang dapat menurunkan performa model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Menerapkan SMOTE untuk menyeimbangkan dataset...&quot;</span><span class="p">)</span>
+
+<span class="c1"># Inisialisasi SMOTE</span>
+<span class="c1"># random_state untuk memastikan hasil yang sama setiap kali dijalankan</span>
+<span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Lakukan fit dan resample pada data</span>
+<span class="c1"># Kita menggunakan X (fitur asli) dan y (target asli)</span>
+<span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Proses SMOTE selesai.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tampilkan distribusi kelas setelah SMOTE</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi kelas setelah SMOTE:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_resampled</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menerapkan SMOTE untuk menyeimbangkan dataset...
+
+Proses SMOTE selesai.
+
+Distribusi kelas setelah SMOTE:
+Class
+Iris-setosa        50
+Iris-versicolor    50
+Iris-virginica     50
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="persiapandan-modelling-bagging">
+<h2>persiapandan modelling bagging<a class="headerlink" href="#persiapandan-modelling-bagging" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell 1: Persiapan dan Definisi Model Bagging</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># 1. Menyiapkan data (menggunakan variabel X, y, X_resampled, y_resampled dari sebelumnya)</span>
+
+<span class="c1"># 2. Definisikan jumlah estimator (jumlah model dalam satu tim)</span>
+<span class="n">JUMLAH_ESTIMATOR</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="c1"># 3. Buat model Bagging untuk Naive Bayes</span>
+<span class="c1">#    Ini akan membuat 50 model Naive Bayes yang berbeda</span>
+<span class="n">bagging_naive_bayes</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">(),</span> 
+    <span class="n">n_estimators</span><span class="o">=</span><span class="n">JUMLAH_ESTIMATOR</span><span class="p">,</span> 
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># 4. Buat model Bagging untuk SVM</span>
+<span class="c1">#    Ini akan membuat 50 model SVM yang berbeda</span>
+<span class="n">bagging_svm</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span> 
+    <span class="n">n_estimators</span><span class="o">=</span><span class="n">JUMLAH_ESTIMATOR</span><span class="p">,</span> 
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># 5. Masukkan kedua model Bagging ke dalam dictionary untuk dievaluasi</span>
+<span class="n">estimators</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">f</span><span class="s2">&quot;Bagging Naive Bayes (</span><span class="si">{</span><span class="n">JUMLAH_ESTIMATOR</span><span class="si">}</span><span class="s2"> estimators)&quot;</span><span class="p">:</span> <span class="n">bagging_naive_bayes</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;Bagging SVM (</span><span class="si">{</span><span class="n">JUMLAH_ESTIMATOR</span><span class="si">}</span><span class="s2"> estimators)&quot;</span><span class="p">:</span> <span class="n">bagging_svm</span>
+<span class="p">}</span>
+
+<span class="c1"># 6. Siapkan dictionary untuk menyimpan hasil</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Model Bagging dengan </span><span class="si">{</span><span class="n">JUMLAH_ESTIMATOR</span><span class="si">}</span><span class="s2"> estimator untuk setiap metode berhasil dibuat.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ Model Bagging dengan 50 estimator untuk setiap metode berhasil dibuat.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="proses-pelatihan-dan-evaluasi">
+<h2>proses pelatihan dan evaluasi<a class="headerlink" href="#proses-pelatihan-dan-evaluasi" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell 2: Proses Pelatihan dan Evaluasi</span>
+<span class="c1"># --- Skenario 1: Evaluasi pada data SEBELUM SMOTE ---</span>
+<span class="n">X_train_orig</span><span class="p">,</span> <span class="n">X_test_orig</span><span class="p">,</span> <span class="n">y_train_orig</span><span class="p">,</span> <span class="n">y_test_orig</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+<span class="n">scaler_orig</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_train_orig_scaled</span> <span class="o">=</span> <span class="n">scaler_orig</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train_orig</span><span class="p">)</span>
+<span class="n">X_test_orig_scaled</span> <span class="o">=</span> <span class="n">scaler_orig</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_orig</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Mengevaluasi pada data SEBELUM SMOTE ---&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">estimators</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_orig_scaled</span><span class="p">,</span> <span class="n">y_train_orig</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_orig_scaled</span><span class="p">)</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_orig</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Sebelum SMOTE&quot;</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hasil </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">: Akurasi = </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">50</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Skenario 2: Evaluasi pada data SETELAH SMOTE ---</span>
+<span class="n">X_train_res</span><span class="p">,</span> <span class="n">X_test_res</span><span class="p">,</span> <span class="n">y_train_res</span><span class="p">,</span> <span class="n">y_test_res</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_resampled</span>
+<span class="p">)</span>
+<span class="n">scaler_res</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_train_res_scaled</span> <span class="o">=</span> <span class="n">scaler_res</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train_res</span><span class="p">)</span>
+<span class="n">X_test_res_scaled</span> <span class="o">=</span> <span class="n">scaler_res</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_res</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Mengevaluasi pada data SETELAH SMOTE ---&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">estimators</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_res_scaled</span><span class="p">,</span> <span class="n">y_train_res</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_res_scaled</span><span class="p">)</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_res</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Setelah SMOTE&quot;</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hasil </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">: Akurasi = </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Ubah hasil menjadi DataFrame</span>
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Mengevaluasi pada data SEBELUM SMOTE ---
+Hasil Bagging Naive Bayes (50 estimators): Akurasi = 1.0000
+Hasil Bagging SVM (50 estimators): Akurasi = 1.0000
+
+--------------------------------------------------
+
+--- Mengevaluasi pada data SETELAH SMOTE ---
+Hasil Bagging Naive Bayes (50 estimators): Akurasi = 0.9778
+Hasil Bagging SVM (50 estimators): Akurasi = 1.0000
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="perbandingan-dan-penentuan-estimator-terbaik">
+<h2>perbandingan dan penentuan estimator terbaik<a class="headerlink" href="#perbandingan-dan-penentuan-estimator-terbaik" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell 3: Perbandingan Hasil dan Penentuan Estimator Terbaik</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Tabel Perbandingan Hasil Akurasi ---&quot;</span><span class="p">)</span>
+<span class="c1"># Menampilkan tabel hasil yang diurutkan dari akurasi tertinggi</span>
+<span class="n">display</span><span class="p">(</span><span class="n">results_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="c1"># Mencari estimator dengan akurasi tertinggi secara otomatis</span>
+<span class="n">best_estimator</span> <span class="o">=</span> <span class="n">results_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()]</span>
+
+<span class="c1"># Menampilkan hasil estimator terbaik</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🏆 ESTIMATOR TERBAIK DITEMUKAN 🏆&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model         : </span><span class="si">{</span><span class="n">best_estimator</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset       : </span><span class="si">{</span><span class="n">best_estimator</span><span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi       : </span><span class="si">{</span><span class="n">best_estimator</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Tabel Perbandingan Hasil Akurasi ---
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>dataset</th>
+      <th>accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Bagging Naive Bayes (50 estimators)</td>
+      <td>Sebelum SMOTE</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bagging SVM (50 estimators)</td>
+      <td>Sebelum SMOTE</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Bagging SVM (50 estimators)</td>
+      <td>Setelah SMOTE</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Bagging Naive Bayes (50 estimators)</td>
+      <td>Setelah SMOTE</td>
+      <td>0.977778</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==================================================
+🏆 ESTIMATOR TERBAIK DITEMUKAN 🏆
+==================================================
+Model         : Bagging Naive Bayes (50 estimators)
+Dataset       : Sebelum SMOTE
+Akurasi       : 1.0000
+==================================================
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="klasifikasi-dengan-logistic-regression">
+<h2>🤖 Klasifikasi dengan Logistic Regression<a class="headerlink" href="#klasifikasi-dengan-logistic-regression" title="Link to this heading">#</a></h2>
+<p>Setelah dataset seimbang berkat SMOTE, tahap berikutnya adalah membangun dan mengevaluasi model klasifikasi.<br />
+Di sini digunakan <strong>Logistic Regression</strong> sebagai algoritma dasar untuk memprediksi kelas target.</p>
+<section id="membagi-data-train-test-split">
+<h3>🔹 1. Membagi Data (Train-Test Split)<a class="headerlink" href="#membagi-data-train-test-split" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Dataset hasil oversampling (<code class="docutils literal notranslate"><span class="pre">X_resampled</span></code>, <code class="docutils literal notranslate"><span class="pre">y_resampled</span></code>) dibagi menjadi:</p>
+<ul>
+<li><p><strong>Data latih (70%)</strong></p></li>
+<li><p><strong>Data uji (30%)</strong></p></li>
+</ul>
+</li>
+<li><p>Parameter <code class="docutils literal notranslate"><span class="pre">stratify=y_resampled</span></code> memastikan proporsi kelas di data latih dan uji tetap seimbang.</p></li>
+</ul>
+</section>
+<section id="standarisasi-data">
+<h3>🔹 2. Standarisasi Data<a class="headerlink" href="#standarisasi-data" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Standarisasi dilakukan <strong>setelah</strong> data dibagi, bukan sebelumnya.</p></li>
+<li><p>Hal ini mencegah <em>data leakage</em> (informasi dari data uji bocor ke data latih).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> digunakan untuk menyesuaikan skala fitur.</p></li>
+</ul>
+</section>
+<section id="inisialisasi-dan-pelatihan-model">
+<h3>🔹 3. Inisialisasi dan Pelatihan Model<a class="headerlink" href="#inisialisasi-dan-pelatihan-model" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Model <strong>Logistic Regression</strong> dibuat dengan <code class="docutils literal notranslate"><span class="pre">random_state=42</span></code> untuk hasil yang konsisten.</p></li>
+<li><p>Model kemudian dilatih menggunakan data latih yang sudah distandarisasi.</p></li>
+</ul>
+</section>
+<section id="prediksi">
+<h3>🔹 4. Prediksi<a class="headerlink" href="#prediksi" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Model yang telah dilatih digunakan untuk memprediksi kelas pada data uji (<code class="docutils literal notranslate"><span class="pre">y_pred</span></code>).</p></li>
+</ul>
+</section>
+<section id="evaluasi-performa-model">
+<h3>🔹 5. Evaluasi Performa Model<a class="headerlink" href="#evaluasi-performa-model" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Accuracy Score</strong> → persentase prediksi yang benar.</p></li>
+<li><p><strong>Classification Report</strong> → menampilkan metrik evaluasi per kelas, yaitu:</p>
+<ul>
+<li><p>Precision</p></li>
+<li><p>Recall</p></li>
+<li><p>F1-score</p></li>
+</ul>
+</li>
+<li><p>Hasil evaluasi dicetak di output.</p></li>
+</ul>
+<p>📌 Tahap ini memastikan bahwa model sudah mampu mempelajari pola dari data yang seimbang, dan performanya dapat diukur dengan metrik yang adil.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bagi data yang sudah di-resampling menjadi data latih dan data uji</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_resampled</span>
+<span class="p">)</span>
+
+<span class="c1"># 2. Lakukan standarisasi data SETELAH dibagi</span>
+<span class="n">scaler_clf</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler_clf</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler_clf</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># 3. Inisialisasi dan latih model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Melatih model Logistic Regression...&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model selesai dilatih.&quot;</span><span class="p">)</span>
+
+<span class="c1"># 4. Lakukan prediksi pada data uji</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># 5. Evaluasi performa model</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Akurasi Model: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Laporan Klasifikasi:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Melatih model Logistic Regression...
+Model selesai dilatih.
+
+Akurasi Model: 0.9778
+
+Laporan Klasifikasi:
+                 precision    recall  f1-score   support
+
+    Iris-setosa       1.00      1.00      1.00        15
+Iris-versicolor       0.94      1.00      0.97        15
+ Iris-virginica       1.00      0.93      0.97        15
+
+       accuracy                           0.98        45
+      macro avg       0.98      0.98      0.98        45
+   weighted avg       0.98      0.98      0.98        45
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visualisasi-confusion-matrix">
+<h2>📊 Visualisasi Confusion Matrix<a class="headerlink" href="#visualisasi-confusion-matrix" title="Link to this heading">#</a></h2>
+<p>Setelah mengevaluasi model dengan <strong>accuracy</strong> dan <strong>classification report</strong>, kita juga perlu melihat detail prediksi model pada setiap kelas.<br />
+Untuk itu digunakan <strong>confusion matrix</strong>.</p>
+<section id="apa-itu-confusion-matrix">
+<h3>🔹 Apa itu Confusion Matrix?<a class="headerlink" href="#apa-itu-confusion-matrix" title="Link to this heading">#</a></h3>
+<p>Confusion matrix adalah tabel yang menunjukkan:</p>
+<ul class="simple">
+<li><p><strong>Baris (Actual Class)</strong> → label asli dari data uji.</p></li>
+<li><p><strong>Kolom (Predicted Class)</strong> → hasil prediksi model.</p></li>
+<li><p>Setiap sel menunjukkan jumlah sampel yang diprediksi sebagai kelas tertentu.</p></li>
+</ul>
+</section>
+<section id="implementasi">
+<h3>🔹 Implementasi<a class="headerlink" href="#implementasi" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">confusion_matrix(y_test,</span> <span class="pre">y_pred)</span></code> → menghasilkan matriks 2D berisi jumlah prediksi benar/salah.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sns.heatmap()</span></code> → menampilkan matriks dalam bentuk heatmap agar lebih mudah dibaca.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">annot=True</span></code> → menampilkan angka pada tiap sel.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt='d'</span></code> → menampilkan angka dalam format bilangan bulat.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xticklabels</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">yticklabels</span></code> → diberi label sesuai kelas model.</p></li>
+</ul>
+</li>
+<li><p>Judul, label sumbu, dan ukuran figure ditambahkan agar visual lebih informatif.</p></li>
+</ol>
+</section>
+<section id="interpretasi">
+<h3>🔹 Interpretasi<a class="headerlink" href="#interpretasi" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Nilai diagonal (kiri atas → kanan bawah) = jumlah prediksi yang <strong>benar</strong>.</p></li>
+<li><p>Nilai di luar diagonal = jumlah prediksi yang <strong>salah</strong> (misclassifications).</p></li>
+</ul>
+<p>📌 Dengan confusion matrix, kita bisa mengetahui di kelas mana model sering salah memprediksi, sehingga dapat menjadi bahan evaluasi untuk perbaikan model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell 5: Visualisasi Confusion Matrix</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kelas Aktual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Kelas Prediksi&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/028f314df8c30f8ea71f24b601f7528f6fc045a5c976f238757a24151c6687d8.png" src="_images/028f314df8c30f8ea71f24b601f7528f6fc045a5c976f238757a24151c6687d8.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="kesimpulan-akhir-proyek">
+<h2>🏁 Kesimpulan Akhir Proyek<a class="headerlink" href="#kesimpulan-akhir-proyek" title="Link to this heading">#</a></h2>
+<p>Proyek ini berhasil mendemonstrasikan secara komprehensif alur kerja machine learning dari awal hingga akhir, dengan penekanan khusus pada keberhasilan penanganan dataset yang tidak seimbang.<br />
+Dengan sengaja menjadikan <strong>Iris-setosa</strong> sebagai kelas minoritas, proyek ini secara efektif mensimulasikan tantangan dunia nyata dan membuktikan bahwa dengan pendekatan yang metodis, model yang sangat akurat dan andal dapat dibangun.</p>
+</section>
+<hr class="docutils" />
+<section id="poin-poin-kunci-keberhasilan">
+<h2>🔑 Poin-Poin Kunci Keberhasilan<a class="headerlink" href="#poin-poin-kunci-keberhasilan" title="Link to this heading">#</a></h2>
+<section id="preprocessing-data-adalah-kunci-utama">
+<h3>1. Preprocessing Data adalah Kunci Utama<a class="headerlink" href="#preprocessing-data-adalah-kunci-utama" title="Link to this heading">#</a></h3>
+<p>Keberhasilan terbesar proyek ini terletak pada langkah preprocessing.<br />
+Penggunaan <strong>SMOTE</strong> terbukti menjadi keputusan yang krusial dan tepat sasaran.</p>
+<ul class="simple">
+<li><p>Dengan menghasilkan sampel sintetis yang berkualitas untuk kelas <strong>Iris-setosa</strong> yang minoritas, SMOTE berhasil mengatasi potensi bias model.</p></li>
+<li><p>Semua kelas dipelajari secara adil.</p></li>
+<li><p>Tanpa langkah ini, model kemungkinan besar akan mengabaikan kelas minoritas dan menghasilkan akurasi yang menyesatkan.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="visualisasi-memberi-validasi-dan-konteks-mendalam">
+<h3>2. Visualisasi Memberi Validasi dan Konteks Mendalam 📈<a class="headerlink" href="#visualisasi-memberi-validasi-dan-konteks-mendalam" title="Link to this heading">#</a></h3>
+<p>Analisis tidak hanya berhenti pada angka akurasi, tetapi diperkuat oleh visualisasi yang memberikan pemahaman <em>mengapa</em> model berhasil.</p>
+<ul class="simple">
+<li><p><strong>Visualisasi PCA</strong> mengungkapkan bahwa <strong>Iris-setosa</strong> secara inheren mudah dipisahkan dari kelas lain.<br />
+Ini memberikan validasi mengapa SMOTE sangat efektif—karena pola kelas minoritasnya sangat jelas.</p></li>
+<li><p><strong>Confusion Matrix</strong> memberikan bukti kuantitatif atas kinerja model yang unggul (~97.8% akurasi), dengan pencapaian paling impresif adalah akurasi <strong>100%</strong> pada kelas <em>setosa</em> yang merupakan kelas minoritas.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="kinerja-model-unggul-dan-dapat-dijelaskan">
+<h3>3. Kinerja Model Unggul dan Dapat Dijelaskan 🧠<a class="headerlink" href="#kinerja-model-unggul-dan-dapat-dijelaskan" title="Link to this heading">#</a></h3>
+<p>Model klasifikasi yang dihasilkan tidak hanya akurat, tetapi juga <strong>dapat dijelaskan</strong>.</p>
+<ul class="simple">
+<li><p>Kesalahan tunggal yang terjadi—satu <em>Iris-virginica</em> yang salah diklasifikasikan sebagai <em>Iris-versicolor</em>—sepenuhnya konsisten dengan temuan dari plot PCA, yang menunjukkan adanya <strong>tumpang tindih antar kelas</strong>.</p></li>
+<li><p>Hal ini membuktikan bahwa model telah belajar dengan baik sesuai dengan <strong>struktur data yang mendasarinya</strong>.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ringkasan">
+<h2>✨ Ringkasan<a class="headerlink" href="#ringkasan" title="Link to this heading">#</a></h2>
+<p>Secara keseluruhan, proyek ini adalah studi kasus yang sangat baik yang menunjukkan bahwa model machine learning yang sukses bukan hanya tentang memilih algoritma yang canggih, melainkan tentang:</p>
+<ul class="simple">
+<li><p>Memahami data</p></li>
+<li><p>Mengidentifikasi tantangan (misalnya data tidak seimbang)</p></li>
+<li><p>Menerapkan solusi yang tepat (SMOTE)</p></li>
+<li><p>Memvalidasi hasil secara menyeluruh dengan visualisasi dan evaluasi metrik</p></li>
+</ul>
+<p>📌 Inilah fondasi utama dalam membangun model machine learning yang <strong>andal, adil, dan dapat dijelaskan</strong>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="jjl.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">🚀 Deteksi Outlier dengan ABOD:</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="coba.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">coba</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-analisis">🔹 Langkah-langkah Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">🎯 Tujuan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">📦 Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-dari-postgresql">🗄️ Load Data dari PostgreSQL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-pca-2d-sebelum-oversampling">🔍 Visualisasi PCA 2D (Sebelum Oversampling)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pisahkan-fitur-dan-target">🔹 1. Pisahkan Fitur dan Target</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standarisasi-fitur">🔹 2. Standarisasi Fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-dengan-pca">🔹 3. Reduksi Dimensi dengan PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-scatter-plot">🔹 4. Visualisasi Scatter Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kelas-awal">🔹 5. Distribusi Kelas Awal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oversampling-dengan-smote">⚖️ Oversampling dengan SMOTE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synthetic-minority-oversampling-technique-smote">🔹 Synthetic Minority Oversampling Technique (SMOTE)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-proses">🔹 Alur Proses</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output">🔹 Output</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#persiapandan-modelling-bagging">persiapandan modelling bagging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-pelatihan-dan-evaluasi">proses pelatihan dan evaluasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-dan-penentuan-estimator-terbaik">perbandingan dan penentuan estimator terbaik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-dengan-logistic-regression">🤖 Klasifikasi dengan Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-train-test-split">🔹 1. Membagi Data (Train-Test Split)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standarisasi-data">🔹 2. Standarisasi Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inisialisasi-dan-pelatihan-model">🔹 3. Inisialisasi dan Pelatihan Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi">🔹 4. Prediksi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-performa-model">🔹 5. Evaluasi Performa Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-confusion-matrix">📊 Visualisasi Confusion Matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apa-itu-confusion-matrix">🔹 Apa itu Confusion Matrix?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi">🔹 Implementasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi">🔹 Interpretasi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-akhir-proyek">🏁 Kesimpulan Akhir Proyek</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poin-poin-kunci-keberhasilan">🔑 Poin-Poin Kunci Keberhasilan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-data-adalah-kunci-utama">1. Preprocessing Data adalah Kunci Utama</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-memberi-validasi-dan-konteks-mendalam">2. Visualisasi Memberi Validasi dan Konteks Mendalam 📈</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kinerja-model-unggul-dan-dapat-dijelaskan">3. Kinerja Model Unggul dan Dapat Dijelaskan 🧠</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan">✨ Ringkasan</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dicky Saputra calon data analyst
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
